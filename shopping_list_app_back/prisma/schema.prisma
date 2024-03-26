@@ -1,0 +1,29 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Genre {
+  id    Int    @id @default(autoincrement())
+  name  String
+  goods Goods[] // StatusとGoodsを関連付ける。一つのStatusには複数のGoodsが紐づく。
+}
+
+model Goods {
+  id        Int     @id @default(autoincrement())
+  name      String
+  quantity  Int
+  genreId   Int
+  statusId  Int
+  genre     Genre  @relation(fields: [genreId], references: [id]) // Genreへの参照を示す
+}
