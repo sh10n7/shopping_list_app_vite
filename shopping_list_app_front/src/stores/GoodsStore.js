@@ -1,7 +1,9 @@
 import { defineStore } from "pinia";
 import api from "../api/axios";
+import { ref } from "vue"
 
 export const useGoodsStore = defineStore('goods', () => {
+  const goods = ref([]);
 
   // 全ジャンルを取得するための記述を追記
   async function fetchAllGoods() {
@@ -31,5 +33,5 @@ export const useGoodsStore = defineStore('goods', () => {
     }
   }
 
-  return {fetchAllGoods, addGoods}
+  return {goods, fetchAllGoods, addGoods}
 });
